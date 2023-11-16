@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/scheduler.dart';
+//import 'package:flutter/scheduler.dart';
 import 'package:discordcloneapp/theme/theme_helper.dart';
 import 'package:discordcloneapp/routes/app_routes.dart';
 

@@ -59,8 +59,12 @@ class FrontPageScreen extends StatelessWidget {
               CustomElevatedButton(
                   text: "Register",
                   onTap: () {
-                    // Navigation.intentWithClearAllRoutes(
-                    //     context, AppRoutes.REGISTER_SCREEN);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(),
+                      ),
+                    );
                   }),
               SizedBox(height: 22.v),
               CustomElevatedButton(
