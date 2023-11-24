@@ -6,7 +6,7 @@ const validateToken = require('../utils/auths/authorization_middleware');
 const requireRoles = require('../utils/auths/RolebaseAuthorization');
 
 // create a new user
-router.post('/user', userController.createUser);
+router.post('/signup', userController.createUser);
 
 // get all users
 router.get('/users', userController.getAllUsers);

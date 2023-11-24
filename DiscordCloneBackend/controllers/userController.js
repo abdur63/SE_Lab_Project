@@ -6,9 +6,15 @@ const jwt = require('jsonwebtoken'); // Import the jwt library
 async function createUser(req, res) {
     try {
         const newUser = await User.create(req.body);
-        res.status(201).json({ message: "User Created!", newUser });
-    } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(201).json({
+            message: "User Created!",
+            user: newUser,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "User with this email already exists",
+            error: error.message,
+        });
     }
 }
 

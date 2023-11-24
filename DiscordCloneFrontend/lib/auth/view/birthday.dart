@@ -28,26 +28,10 @@ class _BirthDayPageState extends State<BirthDayPage> {
   final TextEditingController birthdayController = TextEditingController();
 
   void _signUp(BuildContext context) async {
-    const String apiUrl = 'http://localhost:3000/graphql';
     final Map<String, String> headers = <String, String>{
       'Content-Type': 'application/json'
     };
     final Map<String, dynamic> data = <String, dynamic>{
-      'query': '''
-      mutation CreateUser(\$email: String!, \$password: String!, \$displayName: String!, \$birthday: String!) {
-        createUser(email: \$email, password: \$password, displayName: \$displayName, birthday: \$birthday) {
-          _id
-          email
-          displayName
-          createdAt
-          profilePic
-          status
-          username
-          birthday
-        }
-      }
-    ''',
-      'variables': <String, String>{
         'email': widget.email,
         'password': widget.password,
         'displayName': widget.displayName,
@@ -59,7 +43,7 @@ class _BirthDayPageState extends State<BirthDayPage> {
       final http.Response response = await http.post(
         Uri.parse(apiUrl),
         headers: headers,
-        body: json.encode(data),
+        body: json.Encode(data),
       );
 
       if (response.statusCode == 200) {
