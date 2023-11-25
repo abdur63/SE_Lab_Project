@@ -51,11 +51,11 @@ async function deleteUser(req, res) {
     }
 }
 
-// Login User
+// Login User 
 async function loginUser(req, res) {
-    const { userName, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const user = await User.findOne({ userName });
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(401).json({ message: "Authentication failed. User not found." });
         }
@@ -67,10 +67,7 @@ async function loginUser(req, res) {
 
         res.status(200).json({
             message: "Authentication successful",
-            userName: user.userName,
-            role: user.role,
-            id: user._id,
-            token: token
+            data: user,
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -79,7 +76,6 @@ async function loginUser(req, res) {
 
 function GenerateToken(user) {
     const payload = {
-        role: user.role,
         id: user._id,
     };
     const token = jwt.sign(payload, "adsfasdfjkh$#asdfasdf.adsfxc");

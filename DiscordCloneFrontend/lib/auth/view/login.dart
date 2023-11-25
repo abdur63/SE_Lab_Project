@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import '../bloc/export.bloc.dart';
+import '../../apiCalls/config.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,31 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
 
   void _signIn(BuildContext context) async {
-    const String apiUrl = 'http://localhost:3000/graphql';
+    const String apiUrl = ApiConstants.loginUserApi;
     final Map<String, String> headers = <String, String>{
       'Content-Type': 'application/json'
     };
     final Map<String, dynamic> data = <String, dynamic>{
-      'query': '''
-      mutation SignIn(\$email: String!, \$password: String!) {
-        signIn(email: \$email, password: \$password) {
-          userId
-          email
-          displayName
-          createdAt
-          profilePic
-          status
-          username
-          birthday
-          token
-          tokenExpiration
-        }
-      }
-    ''',
-      'variables': <String, String>{
-        'email': emailController.text,
-        'password': passwordController.text,
-      },
+      'email': emailController.text,
+      'password': passwordController.text,
     };
 
     try {
@@ -57,26 +40,38 @@ class _LoginPageState extends State<LoginPage> {
         body: json.encode(data),
       );
 
-      print(response.body);
+      //print(response.body); for checking whether the response is correct or not
+
       if (response.statusCode == 200) {
         final dynamic responseData = json.decode(response.body);
-        final User user = User(
-          id: responseData['data']['signIn']['userId'],
-          email: responseData['data']['signIn']['email'],
-          username: responseData['data']['signIn']['username'],
-          displayName: responseData['data']['signIn']['displayName'],
-          birthday: responseData['data']['signIn']['birthday'],
-          createdAt: responseData['data']['signIn']['createdAt'],
-          profilePic: responseData['data']['signIn']['profilePic'],
-          status: responseData['data']['signIn']['status'],
-        );
-        BlocProvider.of<AuthBloc>(context).add(UserLoggedIn(user));
-        Navigator.push(
+
+        if (responseData['message'] == 'Authentication successful') {
+          final dynamic userData = responseData['data'];
+
+          final User user = User(
+            id: userData['_id'] ?? '',
+            email: userData['email'] ?? '',
+            username: userData['username'] ?? '',
+            displayName: userData['displayName'] ??
+                '', // Make sure to update this if needed
+            birthday: userData['dateOfBirth'] ?? '',
+            createdAt: userData['createdAt'] ?? '',
+            profilePic: userData['profilePic'] ?? '', // Update this if needed
+            status: userData['status'] ?? '', // Update this if needed
+          );
+
+          BlocProvider.of<AuthBloc>(context).add(UserLoggedIn(user));
+          Navigator.push(
             context,
             MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => ProfilePage(
-                      userData: user,
-                    )));
+              builder: (BuildContext context) => ProfilePage(userData: user),
+            ),
+          );
+        } else {
+          if (kDebugMode) {
+            print('Authentication failed: ${responseData['message']}');
+          }
+        }
       } else {
         if (kDebugMode) {
           print('Error: ${response.statusCode}');

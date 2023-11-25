@@ -30,140 +30,141 @@ class _EditProfileState extends State<EditProfile> {
       body: ListView(
         children: <Widget>[
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        'ACCOUNT INFORMATION',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 214, 214, 214),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700),
-                      )),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                      height: 300,
-                      width: MediaQuery.of(context).size.width,
-                      child: ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          AccountPage(
-                                            text: account[index]['text'],
-                                            user: widget.userData,
-                                          )));
-                            },
-                            child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                color: const Color.fromARGB(255, 50, 50, 50),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 20,
-                                      ),
-                                      SizedBox(
-                                          width: 105,
-                                          child: Text(
-                                            account[index]['text'],
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700),
-                                          )),
-                                      Container(
-                                          width: 236,
-                                          alignment: Alignment.centerRight,
-                                          child: SizedBox(
-                                              child: Text(
-                                            account[index]['text'] ==
-                                                    'User Name'
-                                                ? widget.userData.username
-                                                : account[index]['text'] ==
-                                                        'Display Name'
-                                                    ? widget
-                                                        .userData.displayName
-                                                    : account[index]['text'] ==
-                                                            'E-mail'
-                                                        ? widget.userData.email
-                                                        : '',
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500),
-                                          ))),
-                                      const Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Icon(
-                                            CupertinoIcons.forward,
-                                            color: Colors.grey,
-                                            size: 22,
-                                          )),
-                                    ])),
-                          );
-                        },
-                        itemCount: account.length,
-                        separatorBuilder: (BuildContext context, int index) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                height: 1,
-                                color: const Color.fromARGB(255, 50, 50, 50),
-                                width: 20,
-                              ),
-                              Container(
-                                height: 1,
-                                color: Colors.transparent,
-                                width: MediaQuery.of(context).size.width - 40,
-                              )
-                            ],
-                          );
-                        },
-                      )),
-                  const Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        'HANDLE ACCOUNT',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 214, 214, 214),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700),
-                      )),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      color: const Color.fromARGB(255, 50, 50, 50),
-                      child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+            padding: const EdgeInsets.symmetric(vertical: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'ACCOUNT INFORMATION',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 214, 214, 214),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700),
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                    height: 300,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                    builder: (BuildContext context) =>
+                                        AccountPage(
+                                          text: account[index]['text'],
+                                          user: widget.userData,
+                                        )));
+                          },
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              color: const Color.fromARGB(255, 50, 50, 50),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                        width: 105,
+                                        child: Text(
+                                          account[index]['text'],
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700),
+                                        )),
+                                    Container(
+                                        width: 236,
+                                        alignment: Alignment.centerRight,
+                                        child: SizedBox(
+                                            child: Text(
+                                          account[index]['text'] == 'User Name'
+                                              ? widget.userData.username
+                                              : account[index]['text'] ==
+                                                      'Display Name'
+                                                  ? widget.userData.displayName
+                                                  : account[index]['text'] ==
+                                                          'E-mail'
+                                                      ? widget.userData.email
+                                                      : '',
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500),
+                                        ))),
+                                    const Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(
+                                          CupertinoIcons.forward,
+                                          color: Colors.grey,
+                                          size: 22,
+                                        )),
+                                  ])),
+                        );
+                      },
+                      itemCount: account.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            SizedBox(
+                            Container(
+                              height: 1,
+                              color: const Color.fromARGB(255, 50, 50, 50),
                               width: 20,
                             ),
-                            SizedBox(
-                                width: 200,
-                                child: Text(
-                                  'Delete the account',
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w500),
-                                )),
-                          ]))
-                ],
-              ))
+                            Container(
+                              height: 1,
+                              color: Colors.transparent,
+                              width: MediaQuery.of(context).size.width - 40,
+                            )
+                          ],
+                        );
+                      },
+                    )),
+                const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'HANDLE ACCOUNT',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 214, 214, 214),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700),
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  color: const Color.fromARGB(255, 50, 50, 50),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          'Delete the account',
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );

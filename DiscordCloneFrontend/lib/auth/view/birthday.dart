@@ -61,8 +61,6 @@ class _BirthDayPageState extends State<BirthDayPage> {
           status: responseData['status'] ?? '',
         );
 
-        print(user);
-
         BlocProvider.of<AuthBloc>(context).add(UserLoggedIn(user));
         Navigator.push(
           context,
