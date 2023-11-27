@@ -1,8 +1,7 @@
 // controllers/UserController.js
 const User = require('../models/userModel');
-const jwt = require('jsonwebtoken'); // Import the jwt library
 
-//create a new User
+//register a user
 async function createUser(req, res) {
     try {
         const newUser = await User.create(req.body);
@@ -17,6 +16,27 @@ async function createUser(req, res) {
         });
     }
 }
+
+// Login User 
+async function loginUser(req, res) {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: "Authentication failed. User not found." });
+        }
+        if (user.password !== password) {
+            return res.status(401).json({ message: "Authentication failed. Incorrect password." });
+        }
+
+        res.status(200).json({
+            message: "Authentication successful",
+            data: user,
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
 //get all Users
 async function getAllUsers(req, res) {
@@ -51,53 +71,10 @@ async function deleteUser(req, res) {
     }
 }
 
-// Login User 
-async function loginUser(req, res) {
-    const { email, password } = req.body;
-    try {
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).json({ message: "Authentication failed. User not found." });
-        }
-        if (user.password !== password) {
-            return res.status(401).json({ message: "Authentication failed. Incorrect password." });
-        }
-
-        var token = GenerateToken(user);
-
-        res.status(200).json({
-            message: "Authentication successful",
-            data: user,
-        });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-};
-
-function GenerateToken(user) {
-    const payload = {
-        id: user._id,
-    };
-    const token = jwt.sign(payload, "adsfasdfjkh$#asdfasdf.adsfxc");
-    return token;
-};
-
-async function adminDashboard(req, res) {
-    res.status(200).json({ message: "Admin Dashboard" });
-}
-
-async function roleBased(req, res) {
-    res.status(200).json({
-        message: "OK",
-    });
-}
-
 module.exports = {
     createUser,
+    loginUser,
     getAllUsers,
     updateUser,
     deleteUser,
-    loginUser,
-    adminDashboard,
-    roleBased
 };

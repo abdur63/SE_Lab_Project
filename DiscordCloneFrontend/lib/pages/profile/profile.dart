@@ -63,12 +63,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: 45,
               ),
               BouncingWidget(
-                  onPressed: () {},
-                  child: const Icon(
-                    Icons.notifications,
-                    color: Colors.grey,
-                    size: 30,
-                  )),
+                onPressed: () {},
+                child: const Icon(
+                  Icons.notifications,
+                  color: Colors.grey,
+                  size: 30,
+                ),
+              ),
               const SizedBox(
                 width: 45,
               ),
@@ -170,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 10,
                         ),
                         const Icon(
-                          CupertinoIcons.profile_circled,
+                          CupertinoIcons.circle_fill,
                           color: Colors.grey,
                         ),
                         const SizedBox(

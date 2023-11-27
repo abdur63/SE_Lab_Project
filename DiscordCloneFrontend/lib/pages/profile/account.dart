@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import '../../../auth/bloc/export.bloc.dart';
+import '../../apiCalls/config.dart';
 
 class AccountPage extends StatefulWidget {
   final User user;
@@ -22,23 +23,13 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   final TextEditingController controller = TextEditingController();
   void _signIn(BuildContext context, String text, User userData) async {
-    const String apiUrl = 'http://localhost:3000/graphql';
+    const String apiUrl = ApiConstants.loginUserApi;
     final Map<String, String> headers = <String, String>{
       'Content-Type': 'application/json'
     };
     final Map<String, dynamic> data = <String, dynamic>{
-      'query': '''
-      mutation UpdateUserProfile(\$id: ID!, \$status: String) {
-        updateUser(id: \$id, status: \$status) {
-          _id
-          status
-        }
-      }
-    ''',
-      'variables': <String, String>{
-        'id': userData.id,
-        'status': text,
-      },
+      'id': userData.id,
+      'status': text,
     };
 
     try {
@@ -59,7 +50,7 @@ class _AccountPageState extends State<AccountPage> {
           birthday: userData.birthday,
           createdAt: userData.createdAt,
           profilePic: userData.profilePic,
-          status: responseData['data']['updateUser']['status'],
+          status: responseData['status'] ?? '',
         );
         BlocProvider.of<AuthBloc>(context).add(UserLoggedIn(user));
         Navigator.pop(context);

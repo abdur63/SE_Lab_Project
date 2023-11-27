@@ -55,59 +55,61 @@ class _EditProfileState extends State<EditProfile> {
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute<dynamic>(
-                                    builder: (BuildContext context) =>
-                                        AccountPage(
-                                          text: account[index]['text'],
-                                          user: widget.userData,
-                                        )));
+                              context,
+                              MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) => AccountPage(
+                                  text: account[index]['text'],
+                                  user: widget.userData,
+                                ),
+                              ),
+                            );
                           },
                           child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              color: const Color.fromARGB(255, 50, 50, 50),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      width: 20,
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            color: const Color.fromARGB(255, 50, 50, 50),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  width: 20,
+                                ),
+                                SizedBox(
+                                    width: 82,
+                                    child: Text(
+                                      account[index]['text'],
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    )),
+                                Container(
+                                  width: 236,
+                                  alignment: Alignment.centerRight,
+                                  child: SizedBox(
+                                    child: Text(
+                                      account[index]['text'] == 'User Name'
+                                          ? widget.userData.username
+                                          : account[index]['text'] == 'E-mail'
+                                              ? widget.userData.email
+                                              : '',
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500),
                                     ),
-                                    SizedBox(
-                                        width: 105,
-                                        child: Text(
-                                          account[index]['text'],
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700),
-                                        )),
-                                    Container(
-                                        width: 236,
-                                        alignment: Alignment.centerRight,
-                                        child: SizedBox(
-                                            child: Text(
-                                          account[index]['text'] == 'User Name'
-                                              ? widget.userData.username
-                                              : account[index]['text'] ==
-                                                      'Display Name'
-                                                  ? widget.userData.displayName
-                                                  : account[index]['text'] ==
-                                                          'E-mail'
-                                                      ? widget.userData.email
-                                                      : '',
-                                          style: const TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500),
-                                        ))),
-                                    const Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Icon(
-                                          CupertinoIcons.forward,
-                                          color: Colors.grey,
-                                          size: 22,
-                                        )),
-                                  ])),
+                                  ),
+                                ),
+                                const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(
+                                    CupertinoIcons.forward,
+                                    color: Colors.grey,
+                                    size: 22,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
                       itemCount: account.length,
@@ -161,10 +163,10 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

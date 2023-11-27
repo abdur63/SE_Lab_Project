@@ -50,24 +50,32 @@ class _BirthDayPageState extends State<BirthDayPage> {
 
       if (response.statusCode == 201) {
         final dynamic responseData = json.decode(response.body);
-        final User user = User(
-          id: responseData['_id'] ?? '',
-          email: responseData['email'] ?? '',
-          displayName: responseData['displayName'] ?? '',
-          username: responseData['username'] ?? '',
-          birthday: responseData['dateOfBirth'] ?? '',
-          createdAt: responseData['createdAt'] ?? '',
-          profilePic: responseData['profilePic'] ?? '',
-          status: responseData['status'] ?? '',
-        );
 
-        BlocProvider.of<AuthBloc>(context).add(UserLoggedIn(user));
-        Navigator.push(
-          context,
-          MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => ProfilePage(userData: user),
-          ),
-        );
+        if (responseData['message'] == 'User Created!') {
+          final User user = User(
+            id: responseData['_id'] ?? '',
+            email: responseData['email'] ?? '',
+            displayName: responseData['displayName'] ?? '',
+            username: responseData['username'] ?? '',
+            birthday: responseData['dateOfBirth'] ?? '',
+            createdAt: responseData['createdAt'] ?? '',
+            profilePic: responseData['profilePic'] ?? '',
+            status: responseData['status'] ?? '',
+          );
+
+          BlocProvider.of<AuthBloc>(context).add(UserLoggedIn(user));
+          Navigator.push(
+            context,
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext context) => ProfilePage(userData: user),
+            ),
+          );
+        } else {
+          if (kDebugMode) {
+            print(
+                'User with this email already exists: ${responseData['message']}');
+          }
+        }
       } else {
         if (kDebugMode) {
           print('Error: ${response.statusCode}');

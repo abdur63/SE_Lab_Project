@@ -25,52 +25,56 @@ class _BodyWidgetState extends State<BodyWidget> {
             return GestureDetector(
               onTap: () {
                 if (settings[index]['button'] == 'Account') {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (BuildContext context) => EditProfile(userData: widget.userData)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              EditProfile(userData: widget.userData)));
                 }
               },
               child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: const Color.fromARGB(255, 50, 50, 50),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          width: 10,
-                        ),
-                        Icon(
-                          settings[index]['icon'],
-                          color: settings[index]['button'] == 'Obtain Nitro'
-                              ? const Color.fromARGB(255, 95, 140, 255)
-                              : Colors.grey,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                            width: 195,
-                            child: Text(
-                              settings[index]['button'],
-                              style: TextStyle(
-                                  color: settings[index]['button'] ==
-                                          'Obtain Nitro'
-                                      ? const Color.fromARGB(255, 95, 140, 255)
-                                      : Colors.white,
-                                  fontWeight: FontWeight.w700),
-                            )),
-                        const SizedBox(
-                          width: 110,
-                        ),
-                        const Icon(
-                          CupertinoIcons.forward,
-                          color: Colors.grey,
-                          size: 22,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                      ])),
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                color: const Color.fromARGB(255, 50, 50, 50),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: 10,
+                    ),
+                    Icon(
+                      settings[index]['icon'],
+                      color: settings[index]['button'] == 'Obtain Nitro'
+                          ? const Color.fromARGB(255, 95, 140, 255)
+                          : Colors.grey,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                        width: 195,
+                        child: Text(
+                          settings[index]['button'],
+                          style: TextStyle(
+                              color: settings[index]['button'] == 'Obtain Nitro'
+                                  ? const Color.fromARGB(255, 95, 140, 255)
+                                  : Colors.white,
+                              fontWeight: FontWeight.w700),
+                        )),
+                    const SizedBox(
+                      width: 79,
+                    ),
+                    const Icon(
+                      CupertinoIcons.forward,
+                      color: Colors.grey,
+                      size: 22,
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
             );
           },
           itemCount: settings.length,
