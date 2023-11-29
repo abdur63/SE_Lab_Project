@@ -227,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     width: 10,
                                   ),
                     const SizedBox(
-                      width: 40,
+                      width: 85,
                     ),
                     Text(
                       widget.userData.status,

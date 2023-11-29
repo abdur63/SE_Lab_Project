@@ -138,15 +138,15 @@ class _LoginPageState extends State<LoginPage> {
                 color: const Color.fromARGB(255, 24, 24, 24)),
             const SizedBox(height: 16.0),
             Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
-                child: CustomButtonWidget(
-                  onPressed: () {
-                    _signIn(context);
-                  },
-                  message: 'Next',
-                  color: const Color.fromARGB(255, 127, 99, 252),
-                )),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+              child: CustomButtonWidget(
+                onPressed: () {
+                  _signIn(context);
+                },
+                message: 'Next',
+                color: const Color.fromARGB(255, 127, 99, 252),
+              ),
+            ),
           ],
         ),
       ),

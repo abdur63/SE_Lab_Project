@@ -60,11 +60,12 @@ async function updateUser(req, res) {
     }
 }
 
-//delete a User by ID
+//delete a User by Email
 async function deleteUser(req, res) {
     try {
-        const { id } = req.params;
-        await User.findByIdAndRemove(id);
+        const { email } = req.params;
+        await User.find(email);
+        console.log(email);
         res.status(200).json({ message: "User Deleted!" });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -74,7 +75,7 @@ async function deleteUser(req, res) {
 module.exports = {
     createUser,
     loginUser,
+    deleteUser,
     getAllUsers,
     updateUser,
-    deleteUser,
 };
