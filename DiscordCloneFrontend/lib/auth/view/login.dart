@@ -13,7 +13,7 @@ import '../bloc/export.bloc.dart';
 import '../../apiCalls/config.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -22,8 +22,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  bool isLoading = false;
 
   void _signIn(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+
     const String apiUrl = ApiConstants.loginUserApi;
     final Map<String, String> headers = <String, String>{
       'Content-Type': 'application/json'
@@ -40,8 +45,6 @@ class _LoginPageState extends State<LoginPage> {
         body: json.encode(data),
       );
 
-      //print(response.body); for checking whether the response is correct or not
-
       if (response.statusCode == 200) {
         final dynamic responseData = json.decode(response.body);
 
@@ -52,15 +55,15 @@ class _LoginPageState extends State<LoginPage> {
             id: userData['_id'] ?? '',
             email: userData['email'] ?? '',
             username: userData['username'] ?? '',
-            displayName: userData['displayName'] ??
-                '', // Make sure to update this if needed
+            displayName: userData['displayName'] ?? '',
             birthday: userData['dateOfBirth'] ?? '',
             createdAt: userData['createdAt'] ?? '',
-            profilePic: userData['profilePic'] ?? '', // Update this if needed
-            status: userData['status'] ?? '', // Update this if needed
+            profilePic: userData['profilePic'] ?? '',
+            status: userData['status'] ?? '',
           );
 
           BlocProvider.of<AuthBloc>(context).add(UserLoggedIn(user));
+
           Navigator.push(
             context,
             MaterialPageRoute<dynamic>(
@@ -81,6 +84,10 @@ class _LoginPageState extends State<LoginPage> {
       if (kDebugMode) {
         print('Error: $e');
       }
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -92,10 +99,11 @@ class _LoginPageState extends State<LoginPage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(Icons.arrow_back)),
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -109,9 +117,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Text(
                 'Login',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 27,
-                    fontWeight: FontWeight.w900),
+                  color: Colors.white,
+                  fontSize: 27,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
             Container(
@@ -120,32 +129,39 @@ class _LoginPageState extends State<LoginPage> {
             const Text(
               'Enter your email',
               style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w900),
+                color: Colors.grey,
+                fontSize: 13,
+                fontWeight: FontWeight.w900,
+              ),
             ),
             Container(
               height: 20,
             ),
             TextFieldWidget(
-                textEditingController: emailController,
-                hint: 'Email',
-                color: const Color.fromARGB(255, 24, 24, 24)),
+              textEditingController: emailController,
+              hint: 'Email',
+              color: const Color.fromARGB(255, 24, 24, 24),
+            ),
             const SizedBox(height: 20.0),
             TextFieldWidget(
-                textEditingController: passwordController,
-                hint: 'Password',
-                color: const Color.fromARGB(255, 24, 24, 24)),
+              textEditingController: passwordController,
+              hint: 'Password',
+              color: const Color.fromARGB(255, 24, 24, 24),
+            ),
             const SizedBox(height: 16.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
-              child: CustomButtonWidget(
-                onPressed: () {
-                  _signIn(context);
-                },
-                message: 'Next',
-                color: const Color.fromARGB(255, 127, 99, 252),
-              ),
+              child: isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : CustomButtonWidget(
+                      onPressed: () {
+                        _signIn(context);
+                      },
+                      message: 'Next',
+                      color: const Color.fromARGB(255, 127, 99, 252),
+                    ),
             ),
           ],
         ),

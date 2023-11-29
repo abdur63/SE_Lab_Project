@@ -48,14 +48,10 @@ class _EditProfileState extends State<EditProfile> {
               builder: (BuildContext context) => OnBoardPage(),
             ),
           );
-        } else {
-          if (kDebugMode) {
-            print('User cannot be deleted: ${responseData['message']}');
-          }
         }
       } else {
         if (kDebugMode) {
-          print('Error: ${response.statusCode}');
+          print('User not found: ${response.statusCode}');
         }
       }
     } catch (e) {
@@ -204,9 +200,6 @@ class _EditProfileState extends State<EditProfile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      // const SizedBox(
-                      //   width: 20,
-                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 0, vertical: 5),
@@ -215,17 +208,9 @@ class _EditProfileState extends State<EditProfile> {
                             _deleteUser(context);
                           },
                           message: 'Delete the account',
-                          color: const Color.fromARGB(255, 252, 99, 130),
+                          color: const Color.fromARGB(255, 216, 15, 55),
                         ),
                       ),
-                      // SizedBox(
-                      //   width: 200,
-                      //   child: Text(
-                      //     'Delete the account',
-                      //     style: TextStyle(
-                      //         color: Colors.red, fontWeight: FontWeight.w500),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
