@@ -64,8 +64,7 @@ async function updateUser(req, res) {
 async function deleteUser(req, res) {
     try {
         const { email } = req.params;
-        await User.find(email);
-        console.log(email);
+        await User.findOneAndDelete(email);
         res.status(200).json({ message: "User Deleted!" });
     } catch (err) {
         res.status(500).json({ message: err.message });
